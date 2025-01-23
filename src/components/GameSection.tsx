@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/GameSection.scss';
-import { ArrowBigDownDashIcon } from 'lucide-react';
+import { ArrowBigDownDashIcon, Camera } from 'lucide-react';
+
 
 const GameSection = () => {
   return (
@@ -15,6 +16,10 @@ const GameSection = () => {
       
       <section className="game-section__section">
         <h2 className='game-section__title'>キャリブレーション</h2>
+        <div className="game-section__camera-feed">
+          <Camera size={48} />
+        </div>
+      
       </section>
       
       <section className="game-section__section">
