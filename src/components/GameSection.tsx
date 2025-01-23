@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/GameSection.scss';
+import '../styles/GameSection.scss';
 
 const GameSection = () => {
   return (
