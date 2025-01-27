@@ -1,59 +1,66 @@
 .game-section {
-    &__container {
-      width: 100%;
-    }
-  
-    &__section {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background-color:white;
-      position: relative;
-    }
-
-    &__title{
-      font-size: 36px;
-      font-weight: bold;
-      margin-bottom: 24px;
-    }
-
-    &__description {
-      font-size: 20px;
-      text-align: center;
-      max-width: 600px;
-      margin-bottom: 48px;
-    }
-    &_scroll-indicator{
-      position: absolute;
-      bottom: 32px;
-      animation: bounce 1s infinite;
-    }
-    &__camera-feed {
-      position:absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      max-width: 220px;
-      aspect-ratio: 16 / 9;
-      background-color: #f0f0f0;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-    }
+  &__container {
+    width: 100%;
   }
 
-  @keyframes bounce {
-    // アニメーション開始時(0%)と終了時(100%)の位置
-    0%, 100% {
-      transform: translateY(0);
-    }
-    // アニメーション中間点の位置
-    50% {
-      transform: translateY(-10px);
+  &__section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-color: white;
+    position: relative;
+  }
+
+  &__title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
+
+  &__description {
+    font-size: 20px;
+    text-align: center;
+    max-width: 600px;
+    margin-bottom: 48px;
+  }
+  &_scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    animation: bounce 1s infinite;
+  }
+  &__camera-feed {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 220px;
+    aspect-ratio: 16 / 9;
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
+}
+
+@keyframes bounce {
+  // アニメーション開始時(0%)と終了時(100%)の位置
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  // アニメーション中間点の位置
+  50% {
+    transform: translateY(-10px);
+  }
+}
