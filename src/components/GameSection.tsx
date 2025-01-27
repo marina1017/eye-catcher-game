@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/GameSection.scss";
 import { ArrowBigDownDashIcon, Camera } from "lucide-react";
+import webgazer from "webgazer";
 
 const GameSection = () => {
   const [currentSection, setCurrentSection] = useState(0);
