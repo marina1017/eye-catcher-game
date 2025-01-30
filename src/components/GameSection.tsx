@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../styles/GameSection.scss";
 import { ArrowBigDownDashIcon, Camera } from "lucide-react";
-import webgazer from "webgazer";
+// import webgazer from "webgazer";
+
+declare global {
+  interface Window {
+    webgazer: any;
+  }
+}
 
 interface GazePoint {
   x: number;
@@ -17,15 +23,21 @@ const GameSection = () => {
     if (currentSection === 1) {
       const initializeWebGazer = async () => {
         try {
+          if (!window.webgazer) {
+            console.error("WebGazer is not loaded.");
+            return;
+          }
           // APIドキュメント(https://github.com/brownhci/WebGazer/wiki/Top-Level-API)
-          await webgazer
-            .setRegression("weightedRidge")
-            .setTracker("TFFacemesh")
-            .setGazeListener((data: { x: number; y: number } | null) => {
+          await window.webgazer
+            .setTracker("clmtrackr")
+            .setGazeListener((data: any) => {
               if (data == null) return;
-              setGazePoint(data);
+              console.log(data);
+              setGazePoint({ x: data.x, y: data.y });
             })
-            .begin();
+            .saveDataAcrossSessions(true);
+
+          await window.webgazer.begin();
         } catch (err) {
           console.error("WebGazer initialization failed:", err);
         }
@@ -34,7 +46,10 @@ const GameSection = () => {
       initializeWebGazer();
 
       return () => {
-        webgazer.end();
+        console.log("webgazer.isReady()", window.webgazer.isReady());
+        if (window.webgazer.isReady()) {
+          window.webgazer.end();
+        }
       };
     }
   }, [currentSection]);
