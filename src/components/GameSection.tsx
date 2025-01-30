@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "../styles/GameSection.scss";
-import { ArrowBigDownDashIcon, Camera } from "lucide-react";
-// import webgazer from "webgazer";
+import { ArrowBigDownDashIcon } from "lucide-react";
+import type webgazer from "webgazer";
 
+// 本当はCDN経由じゃなくてimportしたかったのだけど、何故か視線を取得できなくなったので断念
 declare global {
   interface Window {
-    webgazer: any;
+    webgazer?: typeof webgazer;
   }
 }
 
@@ -28,16 +29,37 @@ const GameSection = () => {
             return;
           }
           // APIドキュメント(https://github.com/brownhci/WebGazer/wiki/Top-Level-API)
-          await window.webgazer
-            .setTracker("clmtrackr")
-            .setGazeListener((data: any) => {
-              if (data == null) return;
-              console.log(data);
-              setGazePoint({ x: data.x, y: data.y });
-            })
-            .saveDataAcrossSessions(true);
+          if (!document.getElementById("webgazerVideoContainer")) {
+            await window.webgazer
+              .setTracker("clmtrackr")
+              .setGazeListener((data: any) => {
+                if (data == null) return;
+                console.log(data);
+                setGazePoint({ x: data.x, y: data.y });
+              })
+              .saveDataAcrossSessions(true);
 
-          await window.webgazer.begin();
+            await window.webgazer.begin();
+            // WebGazerのスタイルが上書きされるのを防ぐため、遅延して適用
+            // setTimeout(() => {
+            //   const videoContainer = document.getElementById(
+            //     "webgazerVideoContainer"
+            //   );
+            //   if (videoContainer) {
+            //     Object.assign(videoContainer.style, {
+            //       position: "fixed",
+            //       top: "10px",
+            //       right: "10px",
+            //       width: "160px",
+            //       height: "120px",
+            //       zIndex: "1000",
+            //       opacity: "0.8",
+            //       border: "2px solid #00ff00",
+            //       borderRadius: "8px",
+            //     });
+            //   }
+            // }, 1000); // WebGazer の上書きを回避するために 1 秒遅らせる
+          }
         } catch (err) {
           console.error("WebGazer initialization failed:", err);
         }
