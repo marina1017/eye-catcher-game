@@ -1,0 +1,11 @@
+{
+    "installDependencies": true,
+    "vscode": {
+        "extensions": [
+        "oderwat.indent-rainbow",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker",
+        "shardulm94.trailing-spaces"
+        ]
+    }
+}

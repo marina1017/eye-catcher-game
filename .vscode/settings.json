@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "cSpell.language": "en",
+    "trailing-spaces.trimOnSave": true,
+    "trailing-spaces.highlightCurrentLine": false
+  }
