@@ -17,7 +17,24 @@ interface GazePoint {
 
 const GameSection = () => {
   const [currentSection, setCurrentSection] = useState(0);
+  // 視線の位置
   const [gazePoint, setGazePoint] = useState<GazePoint | null>(null);
+  // キャリブレーション周り
+  const [calibrationPoints, setCalibrationPoints] = useState<CalibrationPoint[]>([
+    { x: 10, y: 10, isComplete: false },
+    { x: 90, y: 10, isComplete: false },
+    { x: 50, y: 50, isComplete: false },
+    { x: 10, y: 90, isComplete: false },
+    { x: 90, y: 90, isComplete: false },
+  ]);
+  const [currentPointIndex, setCurrentPointIndex] = useState(0);
+  const [isCalibrationComplete, setIsCalibrationComplete] = useState(false);
+
+interface CalibrationPoint {
+  x: number,
+  y: number,
+  isComplete: boolean;
+}
 
   // WebGazer初期化
   useEffect(() => {
@@ -40,25 +57,7 @@ const GameSection = () => {
               .saveDataAcrossSessions(true);
 
             await window.webgazer.begin();
-            // WebGazerのスタイルが上書きされるのを防ぐため、遅延して適用
-            // setTimeout(() => {
-            //   const videoContainer = document.getElementById(
-            //     "webgazerVideoContainer"
-            //   );
-            //   if (videoContainer) {
-            //     Object.assign(videoContainer.style, {
-            //       position: "fixed",
-            //       top: "10px",
-            //       right: "10px",
-            //       width: "160px",
-            //       height: "120px",
-            //       zIndex: "1000",
-            //       opacity: "0.8",
-            //       border: "2px solid #00ff00",
-            //       borderRadius: "8px",
-            //     });
-            //   }
-            // }, 1000); // WebGazer の上書きを回避するために 1 秒遅らせる
+            window.webgazer.params.videoFrameRate = 10;
           }
         } catch (err) {
           console.error("WebGazer initialization failed:", err);
